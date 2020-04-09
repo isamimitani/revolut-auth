@@ -1,0 +1,75 @@
+/* styles */
+/* called by your view template */
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+    margin: 2em;
+    line-height: 1.5rem;
+  }
+
+  main {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  header {
+    width: 100%;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #373fff;
+    font-weight: bold;
+  }
+
+  h3 {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .code {
+    line-height: initial;
+    background: #607D8B;
+    color: white;
+    padding: .25rem;
+    font-family: monospace;
+    margin: .5rem 0;
+    border-radius: .5rem; 
+    width: fit-content;
+  }
+  .code div{
+    width: fit-content;
+  }
+  
+  .bold {
+    font-weight: bold;
+  }
+  
+  p {
+    max-width: 600px;
+  }
+  
+  li {
+    margin-bottom: 1rem;
+  }
+  
+  form {
+    margin-bottom: 25px;
+    padding: 15px;
+    display: inline-block;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 3px;
+  }
+  
+.buttonContainer {
+    text-align: center;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Test JWT generator</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>
+            Revolut JWT Generator
+        </h1>
+    </header>
+
+    <main>
+        <h3>
+            The aim of this tool is to help you test your JWT connection to the Revolut for Business Open API. The main
+            steps to get started with the Open API are:
+        </h3>
+        <h3>
+            JWT generation HOWTO:
+        </h3>
+        <ol>
+            <li>
+                <div>
+                    Generate a private/public key pair using
+                </div>
+                <div class="code">
+                    <div>
+                        > openssl genrsa -out privatekey.pem 1024
+                    </div>
+                    <div>
+                        > openssl req -new -x509 -key privatekey.pem -out publickey.cer -days 1825
+                    </div>
+                </div>
+            </li>
+            <li>
+                In your Revolut for Business account, open API settings page<br>
+                upload the public key and set <span class='code'>https://revolut-test-516c1.web.app</span> as the
+                <b>OAuth redirect URI</b>.
+            </li>
+            <li>
+                Click on the Authorize access; you'll be redirected to this page.
+            </li>
+        </ol>
+        <p>
+            You'll then be instructed on further actions.
+        </p>
+    </main>
+</body>
+
+</html>

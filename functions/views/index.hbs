@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Test JWT generator</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- import Material UI -->
+    <link href="//cdn.muicss.com/mui-0.10.1/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.10.1/js/mui.min.js"></script>
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- import the webpage's client-side javascript file -->
+    {{!-- <script src="/client.js" defer></script> --}}
+</head>
+
+<body>
+    <header>
+        <h1>
+            Revolut JWT Generator
+        </h1>
+    </header>
+
+    <main>
+        <h2>
+            Good! you've got the authorization code!
+        </h2>
+        <div class="mui-panel">
+            <form action="/credentials" method="post" enctype="application/x-www-form-urlencoded">
+                <label>
+                    <div style="margin-bottom:.25rem;">
+                        <b>In order to create a token, please set the credentials and press the button:</b>
+                    </div>
+                </label>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <textarea name="privateKey" autocomplete="off" required></textarea>
+                    <label>Private key</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input name="client_id" type="text" maxlength="100" autocomplete="off" required>
+                    <label>Client id</label>
+                </div>
+                <div class="buttonContainer">
+                    <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary">Generate token</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
