@@ -22,9 +22,9 @@ app.get('/', (request, response) => {
     }
 });
 
-app.post('/credentials', (req, res) => {
-    const { privateKey, client_id } = req.body
-    generateToken(privateKey, client_id, res)
+app.post('/credentials', (request, response) => {
+    const { privateKey, client_id } = request.body
+    generateToken(privateKey, client_id, response)
 });
 
 function generateToken(privateKey, client_id, res) {
@@ -53,7 +53,9 @@ function generateToken(privateKey, client_id, res) {
         })
         // eslint-disable-next-line promise/always-return
     }).then((result) => {
-        res.json(result.data);
+        const jwt = { JWT: token }
+        const responseJson = Object.assign(result.data, jwt);
+        res.json(responseJson);
     }).catch(e => {
         console.dir(e)
         res.send(e)
