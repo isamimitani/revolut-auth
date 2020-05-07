@@ -65,4 +65,4 @@ node_modules/
 .env
 
 # property file
-functions/app.properties
+functions/config.json

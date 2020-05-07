@@ -5,8 +5,9 @@ const axios = require('axios')
 const qs = require('qs')
 const engines = require('consolidate');
 const crypto = require('crypto');
-const propertiesReader = require('properties-reader');
-const properties = propertiesReader('./app.properties');
+
+// read property file
+const config_data = require('./config.json');
 
 const iv = new Buffer('0000000000000000');
 
@@ -25,7 +26,7 @@ app.set('view engine', 'hbs');
 let code = null
 
 app.get('/', (request, response) => {
-    code = request.query.code
+    code = request.query.code;
     if (!code) {
         // Code is required to obtain access token
         response.render('index_noCode');
@@ -41,8 +42,8 @@ app.post('/credentials', (request, response) => {
 
 // method to generate JWT and call API to generate access token
 function generateToken(privateKey, client_id, res) {
-    // const tokenUrl = 'https://b2b.revolut.com/api/1.0/auth/token' // production url
-    const tokenUrl = 'https://sandbox-b2b.revolut.com/api/1.0/auth/token' // test url
+    const tokenUrl = 'https://b2b.revolut.com/api/1.0/auth/token' // production url
+    // const tokenUrl = 'https://sandbox-b2b.revolut.com/api/1.0/auth/token' // test url
     const issuer = 'revolut-test-516c1.web.app' // Issuer for JWT, should be derived from your redirect URL
     const aud = 'https://revolut.com' // Constant
 
@@ -70,7 +71,7 @@ function generateToken(privateKey, client_id, res) {
         // eslint-disable-next-line promise/always-return
     }).then((result) => {
         // encrypts received data
-        const key = properties.get('encryption.key').toString();
+        const key = config_data.encryption_key.toString();
         const object = {
             access_token: encrypt(result.data.access_token, key),
             refresh_token: encrypt(result.data.refresh_token, key),
