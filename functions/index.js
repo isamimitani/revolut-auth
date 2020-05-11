@@ -4,6 +4,19 @@ const jwt = require('jsonwebtoken')
 const axios = require('axios')
 const qs = require('qs')
 const engines = require('consolidate');
+const crypto = require('crypto');
+
+// read property file
+const config_data = require('./config.json');
+
+const iv = new Buffer('0000000000000000');
+
+// method to encrypt text data with given key
+const encrypt = (data, key) => {
+    var decodeKey = crypto.createHash('sha256').update(key, 'utf-8').digest();
+    var cipher = crypto.createCipheriv('aes-256-cbc', decodeKey, iv);
+    return cipher.update(data, 'utf8', 'hex') + cipher.final('hex');
+};
 
 const app = express();
 app.engine('hbs', engines.handlebars);
@@ -13,7 +26,7 @@ app.set('view engine', 'hbs');
 let code = null
 
 app.get('/', (request, response) => {
-    code = request.query.code
+    code = request.query.code;
     if (!code) {
         // Code is required to obtain access token
         response.render('index_noCode');
@@ -22,11 +35,12 @@ app.get('/', (request, response) => {
     }
 });
 
-app.post('/credentials', (req, res) => {
-    const { privateKey, client_id } = req.body
-    generateToken(privateKey, client_id, res)
+app.post('/credentials', (request, response) => {
+    const { privateKey, client_id } = request.body
+    generateToken(privateKey, client_id, response)
 });
 
+// method to generate JWT and call API to generate access token
 function generateToken(privateKey, client_id, res) {
     const tokenUrl = 'https://b2b.revolut.com/api/1.0/auth/token' // production url
     // const tokenUrl = 'https://sandbox-b2b.revolut.com/api/1.0/auth/token' // test url
@@ -38,7 +52,10 @@ function generateToken(privateKey, client_id, res) {
         "sub": client_id,
         "aud": aud
     }
+    // generates json web token with given data
     const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: 60 * 60 });
+    
+    // calls Revolut API to generate access token
     axios({
         method: 'POST',
         url: tokenUrl,
@@ -53,7 +70,14 @@ function generateToken(privateKey, client_id, res) {
         })
         // eslint-disable-next-line promise/always-return
     }).then((result) => {
-        res.json(result.data);
+        // encrypts received data
+        const key = config_data.encryption_key.toString();
+        const object = {
+            access_token: encrypt(result.data.access_token, key),
+            refresh_token: encrypt(result.data.refresh_token, key),
+            JWT: encrypt(token, key),
+        }
+        res.json(object);
     }).catch(e => {
         console.dir(e)
         res.send(e)
