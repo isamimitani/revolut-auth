@@ -52,8 +52,9 @@ function generateToken(privateKey, client_id, res) {
         "sub": client_id,
         "aud": aud
     }
+    const days = Number(config_data.token_valid_days);
     // generates json web token with given data
-    const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: 60 * 60 });
+    const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: 60 * 60 * 24 * days });
     
     // calls Revolut API to generate access token
     axios({
