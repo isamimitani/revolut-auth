@@ -9,7 +9,7 @@ const crypto = require('crypto');
 // read property file
 const config_data = require('./config.json');
 
-const iv = new Buffer('0000000000000000');
+const iv = Buffer.from('0000000000000000');
 
 // method to encrypt text data with given key
 const encrypt = (data, key) => {
