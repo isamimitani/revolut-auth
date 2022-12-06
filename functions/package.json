@@ -21,7 +21,7 @@
     "firebase-functions": "^3.6.1",
     "handlebars": "^4.7.6",
     "jsonwebtoken": "^8.5.1",
-    "qs": "^6.9.3"
+    "qs": "^6.9.7"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
